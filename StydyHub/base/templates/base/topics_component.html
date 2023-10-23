@@ -1,0 +1,45 @@
+{% comment %} Component to ahow available topics {% endcomment %}
+
+
+<div class="topics">
+  <div class="topics__header">
+    <h2>Browse Topics</h2>
+  </div>
+  <ul class="topics__list">
+    <li class="flex">
+      <a href="{% url 'home' %}" class="active">All <span>{{topics.count}}</span></a>
+    </li>
+    
+    {% for topic_id , topic_data in topics.items %}
+      {% comment %} <li>
+        <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}} <span>{{topic.room_set.all.count}}</span></a>
+      </li> {% endcomment %}
+      <li style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="{% url 'home' %}?q={{topic_data.name}}" style="text-decoration: none;">{{topic_data.name}} {{topic_data.room_set.all.count}}</a>
+        <a  href="{% url 'subscribe-topic' topic_id %}" style="text-decoration: none;">
+          <span>
+            {% if topic_data.is_subscribed %}
+              Unsubscribe
+            {% else %}
+              Subscribe
+            {% endif %} 
+        </span></a>
+      </li>
+    {% endfor %}
+
+  </ul>
+  <a class="btn btn--link" href="{% url 'browse-topics' %}">
+    More
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+    >
+      <title>chevron-down</title>
+      <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+    </svg>
+  </a>
+</div>
+
